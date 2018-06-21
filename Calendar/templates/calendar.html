@@ -1,9 +1,12 @@
 {% extends "layout.html" %}
 {% block content %}
+
+<div id="errorAlert" class="alert alert-warning" role="alert" style="display:none;"></div>
+
 <div class=container id=main_content>
-  <div class="card">
-    <div class="card-body">
-      <div id=calendar>
+  <div id=calendar_content>
+    <div class="card">
+      <div class="card-body">
         <table class="table table-bordered">
           <thead>
             <tr>
@@ -24,7 +27,7 @@
               <td> </td>
               {% else %}
               <td align="right">
-                <button class="btn btn-primary" data-toggle="collapse" href="#collapseEvents{{day}},#form" role="button" aria-expanded="false" aria-controls="collapseEvents">
+                <button class="btn btn-primary" data-toggle="collapse" href="#collapseEvents{{day}}, #form{{day}}" data-parent="#calendar_content" role="button" aria-expanded="false" aria-controls="collapseEvents">
                   {{ day }}
                 </button>
               </td>
@@ -36,27 +39,79 @@
         </table>
       </div>
     </div>
-  </div>
 
 
-  <div class=row>
-    <div class=col>
-      <div class="collapse" id="collapseEvents1">
-        <div class="card card-body">
-          PlaceHolder for events
+    <div class=row>
+      <div class=col>
+        {% for i in range(31) %}
+        <div class="collapse" id="collapseEvents{{i}}" data-parent="#calendar_content">
+          <div class="card card-body">
+            <p id="event_title_display"></p>
+            <p id="start_time_display"></p>
+            <p id="end_time_display"></p>
+            <p id="event_desc_display"></p>
+          </div>
         </div>
+        {% endfor %}
+      </div>
+
+      <div class=col>
+        {% for i in range(31) %}
+        <div class="collapse" id="form{{i}}" data-parent="#calendar_content">
+          <div class="card card-body">
+            <form>
+              <div class="form-group">
+                <label for="event_title">Event Title</label>
+                <input type="event_title" class="form-control" id="event_title" placeholder="Title Here">
+              </div>
+
+              <div class="form-group">
+                <div class="input-group date" id="start_time" data-target-input="nearest">
+                  <input type="text" class="form-control datetimepicker-input" data-target="#start_time"/>
+                  <div class="input-group-append" data-target="#start_time" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group date" id="end_time" data-target-input="nearest">
+                  <input type="text" class="form-control datetimepicker-input" data-target="#end_time"/>
+                  <div class="input-group-append" data-target="#end_time" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                  </div>
+                </div>
+              </div>
+              <script type="text/javascript">
+                $(function () {
+                  $('#start_time').datetimepicker({format: 'LT'});
+                  $('#end_time').datetimepicker({
+                    useCurrent: false,
+                    format: 'LT'
+                  });
+                  $("#start_time").on("change.datetimepicker", function (e) {
+                    $('#end_time').datetimepicker('minDate', e.date);
+                  });
+                  $("#end_time").on("change.datetimepicker", function (e) {
+                    $('#start_time').datetimepicker('maxDate', e.date);
+                  });
+                });
+              </script>
+
+              <div class="form-group">
+                <label for="event_description">Event Description</label>
+                <textarea class="form-control" id="event_description" rows="3"></textarea>
+              </div>
+
+              <input type="hidden" id="event_date" value="{{i}}">
+
+              <input class="btn btn-primary" type="submit" value="Submit">
+            </form>
+          </div>
+        </div>
+        {% endfor %}
       </div>
     </div>
-
-    <div class=col>
-      <div class="collapse" id="form">
-        <div class="card card-body">
-          PlaceHolder for events
-        </div>
-      </div>
-    </div>
   </div>
-
 </div>
 
 {% endblock %}
