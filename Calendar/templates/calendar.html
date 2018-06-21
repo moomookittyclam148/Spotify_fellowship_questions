@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class=container id=main_content>
+  <div class="card">
+    <div class="card-body">
+      <div id=calendar>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col" style="width: 14%">Sunday</th>
+              <th scope="col" style="width: 14%">Monday</th>
+              <th scope="col" style="width: 14%">Tuesday</th>
+              <th scope="col" style="width: 14%">Wednesday</th>
+              <th scope="col" style="width: 14%">Thursday</th>
+              <th scope="col" style="width: 14%">Friday</th>
+              <th scope="col" style="width: 14%">Saturday</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for week in days %}
+            <tr>
+              {% for day in week %}
+              {% if day == 0 %}
+              <td> </td>
+              {% else %}
+              <td align="right">
+                <button class="btn btn-primary" data-toggle="collapse" href="#collapseEvents{{day}},#form" role="button" aria-expanded="false" aria-controls="collapseEvents">
+                  {{ day }}
+                </button>
+              </td>
+              {% endif %}
+              {% endfor %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+  <div class=row>
+    <div class=col>
+      <div class="collapse" id="collapseEvents1">
+        <div class="card card-body">
+          PlaceHolder for events
+        </div>
+      </div>
+    </div>
+
+    <div class=col>
+      <div class="collapse" id="form">
+        <div class="card card-body">
+          PlaceHolder for events
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}
