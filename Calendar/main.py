@@ -1,6 +1,6 @@
 import calendar
 import datetime
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, request, render_template, jsonify, json
 
 app = Flask(__name__)
 
@@ -17,17 +17,18 @@ def index():
 
     return render_template('calendar.html', days = days)
 
-@app.route('/events', methods=['POST', 'GET'])
-def events():
-    if request.method == "POST":
-        event_tite = request.form['event_tite']
+@app.route('/events', methods=['POST'])
+def post_events():
+    if request.method == 'POST':
+        event_title = request.form.get('event_title', "")
         start_time = request.form['start_time']
         end_time = request.form['end_time']
-        event_desc = request.form['event_description']
+        event_desc = request.form.get('event_desc', "")
         event_date = request.form['event_date']
 
-        if event_tite and start_time and end_time:
-            return jsonify({'event_tite' : event_tite, 'start_time' : start_time, 'end_time' : end_time, 'event_desc' : event_desc, 'event_date' : event_date})
+
+        if event_title != "":
+            return jsonify({'event_title' : event_title, 'start_time' : start_time, 'end_time' : end_time, 'event_desc' : event_desc, 'event_date' : event_date})
 
         return jsonify({'error_msg' : 'Missing Data'})
 

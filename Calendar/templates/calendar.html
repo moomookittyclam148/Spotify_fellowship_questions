@@ -1,6 +1,9 @@
 {% extends "layout.html" %}
 {% block content %}
 
+<script type=text/javascript src="{{url_for('static', filename='js/form.js') }}"></script>
+<script type=text/javascript src="{{url_for('static', filename='js/button_appear.js') }}"></script>
+
 <div id="errorAlert" class="alert alert-warning" role="alert" style="display:none;"></div>
 
 <div class=container id=main_content>
@@ -27,7 +30,7 @@
               <td> </td>
               {% else %}
               <td align="right">
-                <button class="btn btn-primary" data-toggle="collapse" href="#collapseEvents{{day}}, #form{{day}}" data-parent="#calendar_content" role="button" aria-expanded="false" aria-controls="collapseEvents">
+                <button class="btn btn-primary" id="{{day}}" data-toggle="collapse" href="#collapseEvents{{day}}, #form{{day}}" data-parent="#calendar_content" role="button" aria-expanded="false" aria-controls="collapseEvents">
                   {{ day }}
                 </button>
               </td>
@@ -46,6 +49,7 @@
         {% for i in range(31) %}
         <div class="collapse" id="collapseEvents{{i}}" data-parent="#calendar_content">
           <div class="card card-body">
+            <h2> Events </h2>
             <p id="event_title_display"></p>
             <p id="start_time_display"></p>
             <p id="end_time_display"></p>
@@ -59,43 +63,216 @@
         {% for i in range(31) %}
         <div class="collapse" id="form{{i}}" data-parent="#calendar_content">
           <div class="card card-body">
-            <form>
+            <form id={{i}}>
               <div class="form-group">
                 <label for="event_title">Event Title</label>
                 <input type="event_title" class="form-control" id="event_title" placeholder="Title Here">
               </div>
 
               <div class="form-group">
-                <div class="input-group date" id="start_time" data-target-input="nearest">
-                  <input type="text" class="form-control datetimepicker-input" data-target="#start_time"/>
-                  <div class="input-group-append" data-target="#start_time" data-toggle="datetimepicker">
-                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                  </div>
-                </div>
+                <label for="start_time">Example select</label>
+                <select class="form-control" id="start_time">
+                  <option>12:00 am</option>
+                  <option>12:15 am</option>
+                  <option>12:30 am</option>
+                  <option>12:45 am</option>
+                  <option>1:00 am</option>
+                  <option>1:15 am</option>
+                  <option>1:30 am</option>
+                  <option>1:45 am</option>
+                  <option>2:00 am</option>
+                  <option>2:15 am</option>
+                  <option>2:30 am</option>
+                  <option>2:45 am</option>
+                  <option>3:00 am</option>
+                  <option>3:15 am</option>
+                  <option>3:30 am</option>
+                  <option>3:45 am</option>
+                  <option>4:00 am</option>
+                  <option>4:15 am</option>
+                  <option>4:30 am</option>
+                  <option>4:45 am</option>
+                  <option>5:00 am</option>
+                  <option>5:15 am</option>
+                  <option>5:30 am</option>
+                  <option>5:45 am</option>
+                  <option>6:00 am</option>
+                  <option>6:15 am</option>
+                  <option>6:30 am</option>
+                  <option>6:45 am</option>
+                  <option>7:00 am</option>
+                  <option>7:15 am</option>
+                  <option>7:30 am</option>
+                  <option>7:45 am</option>
+                  <option>8:00 am</option>
+                  <option>8:15 am</option>
+                  <option>8:30 am</option>
+                  <option>8:45 am</option>
+                  <option>9:00 am</option>
+                  <option>9:15 am</option>
+                  <option>9:30 am</option>
+                  <option>9:45 am</option>
+                  <option>10:00 am</option>
+                  <option>10:15 am</option>
+                  <option>10:30 am</option>
+                  <option>10:45 am</option>
+                  <option>11:00 am</option>
+                  <option>11:15 am</option>
+                  <option>11:30 am</option>
+                  <option>11:45 am</option>
+                  <option>12:00 pm</option>
+                  <option>12:15 pm</option>
+                  <option>12:30 pm</option>
+                  <option>12:45 pm</option>
+                  <option>1:00 pm</option>
+                  <option>1:15 pm</option>
+                  <option>1:30 pm</option>
+                  <option>1:45 pm</option>
+                  <option>2:00 pm</option>
+                  <option>2:15 pm</option>
+                  <option>2:30 pm</option>
+                  <option>2:45 pm</option>
+                  <option>3:00 pm</option>
+                  <option>3:15 pm</option>
+                  <option>3:30 pm</option>
+                  <option>3:45 pm</option>
+                  <option>4:00 pm</option>
+                  <option>4:15 pm</option>
+                  <option>4:30 pm</option>
+                  <option>4:45 pm</option>
+                  <option>5:00 pm</option>
+                  <option>5:15 pm</option>
+                  <option>5:30 pm</option>
+                  <option>5:45 pm</option>
+                  <option>6:00 pm</option>
+                  <option>6:15 pm</option>
+                  <option>6:30 pm</option>
+                  <option>6:45 pm</option>
+                  <option>7:00 pm</option>
+                  <option>7:15 pm</option>
+                  <option>7:30 pm</option>
+                  <option>7:45 pm</option>
+                  <option>8:00 pm</option>
+                  <option>8:15 pm</option>
+                  <option>8:30 pm</option>
+                  <option>8:45 pm</option>
+                  <option>9:00 pm</option>
+                  <option>9:15 pm</option>
+                  <option>9:30 pm</option>
+                  <option>9:45 pm</option>
+                  <option>10:00 pm</option>
+                  <option>10:15 pm</option>
+                  <option>10:30 pm</option>
+                  <option>10:45 pm</option>
+                  <option>11:00 pm</option>
+                  <option>11:15 pm</option>
+                  <option>11:30 pm</option>
+                  <option>11:45 pm</option>
+                </select>
               </div>
+
               <div class="form-group">
-                <div class="input-group date" id="end_time" data-target-input="nearest">
-                  <input type="text" class="form-control datetimepicker-input" data-target="#end_time"/>
-                  <div class="input-group-append" data-target="#end_time" data-toggle="datetimepicker">
-                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                  </div>
-                </div>
+                <label for="end_time">Example select</label>
+                <select class="form-control" id="end_time">
+                  <option>12:00 am</option>
+                  <option>12:15 am</option>
+                  <option>12:30 am</option>
+                  <option>12:45 am</option>
+                  <option>1:00 am</option>
+                  <option>1:15 am</option>
+                  <option>1:30 am</option>
+                  <option>1:45 am</option>
+                  <option>2:00 am</option>
+                  <option>2:15 am</option>
+                  <option>2:30 am</option>
+                  <option>2:45 am</option>
+                  <option>3:00 am</option>
+                  <option>3:15 am</option>
+                  <option>3:30 am</option>
+                  <option>3:45 am</option>
+                  <option>4:00 am</option>
+                  <option>4:15 am</option>
+                  <option>4:30 am</option>
+                  <option>4:45 am</option>
+                  <option>5:00 am</option>
+                  <option>5:15 am</option>
+                  <option>5:30 am</option>
+                  <option>5:45 am</option>
+                  <option>6:00 am</option>
+                  <option>6:15 am</option>
+                  <option>6:30 am</option>
+                  <option>6:45 am</option>
+                  <option>7:00 am</option>
+                  <option>7:15 am</option>
+                  <option>7:30 am</option>
+                  <option>7:45 am</option>
+                  <option>8:00 am</option>
+                  <option>8:15 am</option>
+                  <option>8:30 am</option>
+                  <option>8:45 am</option>
+                  <option>9:00 am</option>
+                  <option>9:15 am</option>
+                  <option>9:30 am</option>
+                  <option>9:45 am</option>
+                  <option>10:00 am</option>
+                  <option>10:15 am</option>
+                  <option>10:30 am</option>
+                  <option>10:45 am</option>
+                  <option>11:00 am</option>
+                  <option>11:15 am</option>
+                  <option>11:30 am</option>
+                  <option>11:45 am</option>
+                  <option>12:00 pm</option>
+                  <option>12:15 pm</option>
+                  <option>12:30 pm</option>
+                  <option>12:45 pm</option>
+                  <option>1:00 pm</option>
+                  <option>1:15 pm</option>
+                  <option>1:30 pm</option>
+                  <option>1:45 pm</option>
+                  <option>2:00 pm</option>
+                  <option>2:15 pm</option>
+                  <option>2:30 pm</option>
+                  <option>2:45 pm</option>
+                  <option>3:00 pm</option>
+                  <option>3:15 pm</option>
+                  <option>3:30 pm</option>
+                  <option>3:45 pm</option>
+                  <option>4:00 pm</option>
+                  <option>4:15 pm</option>
+                  <option>4:30 pm</option>
+                  <option>4:45 pm</option>
+                  <option>5:00 pm</option>
+                  <option>5:15 pm</option>
+                  <option>5:30 pm</option>
+                  <option>5:45 pm</option>
+                  <option>6:00 pm</option>
+                  <option>6:15 pm</option>
+                  <option>6:30 pm</option>
+                  <option>6:45 pm</option>
+                  <option>7:00 pm</option>
+                  <option>7:15 pm</option>
+                  <option>7:30 pm</option>
+                  <option>7:45 pm</option>
+                  <option>8:00 pm</option>
+                  <option>8:15 pm</option>
+                  <option>8:30 pm</option>
+                  <option>8:45 pm</option>
+                  <option>9:00 pm</option>
+                  <option>9:15 pm</option>
+                  <option>9:30 pm</option>
+                  <option>9:45 pm</option>
+                  <option>10:00 pm</option>
+                  <option>10:15 pm</option>
+                  <option>10:30 pm</option>
+                  <option>10:45 pm</option>
+                  <option>11:00 pm</option>
+                  <option>11:15 pm</option>
+                  <option>11:30 pm</option>
+                  <option>11:45 pm</option>
+                </select>
               </div>
-              <script type="text/javascript">
-                $(function () {
-                  $('#start_time').datetimepicker({format: 'LT'});
-                  $('#end_time').datetimepicker({
-                    useCurrent: false,
-                    format: 'LT'
-                  });
-                  $("#start_time").on("change.datetimepicker", function (e) {
-                    $('#end_time').datetimepicker('minDate', e.date);
-                  });
-                  $("#end_time").on("change.datetimepicker", function (e) {
-                    $('#start_time').datetimepicker('maxDate', e.date);
-                  });
-                });
-              </script>
+
 
               <div class="form-group">
                 <label for="event_description">Event Description</label>
@@ -104,7 +281,7 @@
 
               <input type="hidden" id="event_date" value="{{i}}">
 
-              <input class="btn btn-primary" type="submit" value="Submit">
+              <button type="submit" class="btn btn-primary">submit</button>
             </form>
           </div>
         </div>
