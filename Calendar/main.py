@@ -25,7 +25,6 @@ def index():
     month_name = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
     days = return_days(current_calendar_year, current_calendar_month)
     max_day = max(days[-1][0], days[-1][1], days[-1][2], days[-1][3], days[-1][4], days[-1][5], days[-1][6])
-    print(max_day)
     event_list = []
 
     for i in range(1, max_day):
@@ -89,24 +88,30 @@ def delete_event(event_id):
 
 @app.route('/prev_month')
 def prev_month():
-    f = open('month.txt','r+')
-    month = f.read()
+    f_open = open('month.txt','r')
+    month = f_open.read()
+    f_open.close()
     month = int(month)
     month -= 1
-    f.seek(0)
-    f.write(str(month))
-    f.close()
+    if month == 0:
+        month = 12
+    f_write = open('month.txt','w+')
+    f_write.write(str(month))
+    f_write.close()
     return redirect(url_for('index'))
 
 @app.route('/next_month')
 def next_month():
-    f = open('month.txt','r+')
-    month = f.read()
+    f_open = open('month.txt','r')
+    month = f_open.read()
+    f_open.close()
     month = int(month)
     month += 1
-    f.seek(0)
-    f.write(str(month))
-    f.close()
+    if month == 13:
+        month = 1
+    f_write = open('month.txt','w+')
+    f_write.write(str(month))
+    f_write.close()
     return redirect(url_for('index'))
 
 
