@@ -1,6 +1,6 @@
 import calendar
 import datetime
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, request, redirect, url_for, render_template, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -14,13 +14,29 @@ today_day = today.day
 current_calendar_month = today.month
 current_calendar_year = today.year
 
+# Home page route: Calendar Page
 @app.route('/')
 def index():
     month_name = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
     days = return_days(current_calendar_year, current_calendar_month)
+    event_list = []
 
-    return render_template('calendar.html', days = days, month_name = month_name[current_calendar_month - 1])
+    for i in range(1, (days[-1][-1] + 1)):
+        start_range = datetime.datetime(current_calendar_year, current_calendar_month, i, 0, 0)
+        end_range = datetime.datetime(current_calendar_year, current_calendar_month, i, 23, 59)
+        events = event.query.filter(event.start_time.between(str(start_range), str(end_range))).all()
+        if not events:
+            empty_list = []
+            event_list.append(empty_list)
+        else:
+            event_list.append(events)
 
+
+    return render_template('calendar.html', days = days, month_name = month_name[current_calendar_month - 1], event_list = event_list)
+
+# Event route
+# if post logs form into database and displays it to the event calendar
+# if get displays all events
 @app.route('/events', methods=['POST', 'GET'])
 def events():
     if request.method == 'POST':
@@ -52,14 +68,18 @@ def events():
 
     elif request.method == 'GET':
         events = event.query.all()
-
-        #for items in events:
-        #    items.start_time = convert_to_12hour(items.start_time.strftime('%H:%M'))
-        #    items.end_time = convert_to_12hour(items.end_time.strftime('%H:%M'))
-
         return render_template('events.html', events = events)
 
+# Deletes specified Event note: Flask does not support DELETE or PUT request
+@app.route('/events/<int:event_id>')
+def delete_event(event_id):
+    event_to_delete = event.query.filter_by(id = event_id).first()
+    event_to_delete.delete_event()
+    return redirect(url_for('events'))
+
+
 # Helper Functions ------------------------------------------------------------
+# returns a list of list of days to help with printing the calendar
 def return_days(year, month):
     days_string = calendar.TextCalendar(calendar.SUNDAY)
     count = 0

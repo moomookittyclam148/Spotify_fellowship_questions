@@ -6,6 +6,7 @@
   <div class="jumbotron jumbotron-fluid">
     <div class="container">
       <h1 class="display-4" style="text-align:center;">Events</h1>
+      <a href="/" style="text-align:left;">Return to Calendar</a>
     </div>
   </div>
 
@@ -22,10 +23,13 @@
               <li class="list-group-item">End Time: {{event.end_time.strftime('%D %I:%M %p')}}</li>
               <li class="list-group-item">Event Description: {{event_desc}}</li>
             </ul>
+            <br>
+            <a class="btn btn-primary" id="{{event.id}}" href="/events/{{event.id}}" role="button">Delete</a>
           </div>
         </div>
       </div>
     </div>
+    <br>
   {% endfor %}
   </div>
   {% else %}

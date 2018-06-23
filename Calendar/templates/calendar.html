@@ -47,15 +47,25 @@
 
     <div class=row>
       <div class=col>
-        {% for i in range(31) %}
-        <div class="collapse" id="collapseEvents{{i}}" data-parent="#calendar_content">
+        {% for events in event_list %}
+        <div class="collapse" id="collapseEvents{{loop.index}}" data-parent="#calendar_content">
           <div class="card card-body">
-            <h2 style="text-align:center;"> Events </h2>
+            <h2 style="text-align:center;"> Events for {{month_name}} {{loop.index}} </h2>
             <a class="btn btn-primary" href="/events" role="button" style="display:inline-block">See All Events</a>
-            <p id="event_title_display"></p>
-            <p id="start_time_display"></p>
-            <p id="end_time_display"></p>
-            <p id="event_desc_display"></p>
+            <br>
+            {% for event in events %}
+            <div class="card">
+              <div class="card-body">
+                <ul class="list-group">
+                  <li class="list-group-item">Title: {{event.event_title}}</li>
+                  <li class="list-group-item">Start Time: {{event.start_time.strftime('%D %I:%M %p')}}</li>
+                  <li class="list-group-item">End Time: {{event.end_time.strftime('%D %I:%M %p')}}</li>
+                  <li class="list-group-item">Event Description: {{event_desc}}</li>
+                </ul>
+              </div>
+            </div>
+            <br>
+            {% endfor %}
           </div>
         </div>
         {% endfor %}

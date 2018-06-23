@@ -27,4 +27,4 @@ class event(db.Model):
 
     def delete_event(self):
         db.session.delete(self)
-        return db.session_commit()
+        return db.session.commit()
