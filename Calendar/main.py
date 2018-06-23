@@ -10,18 +10,25 @@ from models import *
 
 
 today = datetime.datetime.now()
-today_day = today.day
 current_calendar_month = today.month
 current_calendar_year = today.year
+f = open('month.txt','w+')
+f.write(str(today.month))
+f.close()
 
 # Home page route: Calendar Page
 @app.route('/')
 def index():
+    f = open('month.txt','r')
+    current_calendar_month = int(f.read())
+    f.close()
     month_name = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
     days = return_days(current_calendar_year, current_calendar_month)
+    max_day = max(days[-1][0], days[-1][1], days[-1][2], days[-1][3], days[-1][4], days[-1][5], days[-1][6])
+    print(max_day)
     event_list = []
 
-    for i in range(1, (days[-1][-1] + 1)):
+    for i in range(1, max_day):
         start_range = datetime.datetime(current_calendar_year, current_calendar_month, i, 0, 0)
         end_range = datetime.datetime(current_calendar_year, current_calendar_month, i, 23, 59)
         events = event.query.filter(event.start_time.between(str(start_range), str(end_range))).all()
@@ -39,6 +46,9 @@ def index():
 # if get displays all events
 @app.route('/events', methods=['POST', 'GET'])
 def events():
+    f = open('month.txt','r')
+    current_calendar_month = int(f.read())
+    f.close()
     if request.method == 'POST':
         event_title = request.form.get('event_title', "")
         start_time = request.form['start_time']
@@ -76,6 +86,28 @@ def delete_event(event_id):
     event_to_delete = event.query.filter_by(id = event_id).first()
     event_to_delete.delete_event()
     return redirect(url_for('events'))
+
+@app.route('/prev_month')
+def prev_month():
+    f = open('month.txt','r+')
+    month = f.read()
+    month = int(month)
+    month -= 1
+    f.seek(0)
+    f.write(str(month))
+    f.close()
+    return redirect(url_for('index'))
+
+@app.route('/next_month')
+def next_month():
+    f = open('month.txt','r+')
+    month = f.read()
+    month = int(month)
+    month += 1
+    f.seek(0)
+    f.write(str(month))
+    f.close()
+    return redirect(url_for('index'))
 
 
 # Helper Functions ------------------------------------------------------------

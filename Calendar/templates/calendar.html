@@ -10,7 +10,17 @@
   <div id=calendar_content>
     <div class="card">
       <div class="card-body">
-        <h2 style="text-align:center;">{{month_name}}</h2>
+        <div class="row">
+          <div class="col">
+            <a href="/prev_month" style="text-align:center;">Previous Month</a>
+          </div>
+          <div class="col">
+            <h2 style="text-align:center;">{{month_name}}</h2>
+          </div>
+          <div class="col">
+            <a href="/next_month" style="text-align:center;">Next Month</a>
+          </div>
+        </div>
         <table class="table table-bordered">
           <thead>
             <tr>
