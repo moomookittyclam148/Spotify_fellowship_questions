@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class=container>
+
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4" style="text-align:center;">Events</h1>
+    </div>
+  </div>
+
+  {% if events %}
+  <div class="container">
+  {% for event in events %}
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <ul class="list-group">
+              <li class="list-group-item">Title: {{event.event_title}}</li>
+              <li class="list-group-item">Start Time: {{event.start_time.strftime('%D %I:%M %p')}}</li>
+              <li class="list-group-item">End Time: {{event.end_time.strftime('%D %I:%M %p')}}</li>
+              <li class="list-group-item">Event Description: {{event_desc}}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+  </div>
+  {% else %}
+  <div>
+    No Events at the moment
+  </div>
+  {% endif %}
+</div>
+
+
+</div>
+
+{% endblock %}

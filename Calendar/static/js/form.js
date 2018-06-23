@@ -21,7 +21,6 @@ $(document).ready(function(){
         }, 500);
       }
       else {
-        $("#collapseEvents" + data.event_date + " > .card").append("<br>");
         $("#collapseEvents" + data.event_date + " > .card").append('<div class="card">');
         $("#collapseEvents" + data.event_date + " > .card").append('<div class="card-body">');
         $("#collapseEvents" + data.event_date + " > .card").append('<ul class="list-group">');
